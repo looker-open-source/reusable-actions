@@ -1,0 +1,50 @@
+# To use this do the following...
+#
+# As the first job, add the call to this workflow...
+#
+#     uses: looker-open-source/reusable-actions/.github/workflows/support-versions.yml@v0.0.1
+#
+# For subsequent jobs add a needs: checkfiles clause, or add it to an array if
+# there already is a call like that. Then use the output of supported-versions in
+# a matrix config
+#
+# name: test supported versions
+# on:
+#   workflow_dispatch:
+#
+# jobs:
+#   setup:
+#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@v0.0.1
+#
+#   test:
+#     name: test - ${{ matrix.looker }}
+#     needs: setup
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
+#
+#     steps:
+#       - name: Repo Checkout
+#         uses: actions/checkout@v2
+#       - name: Run a one-line script
+#         run: echo Hello, ${{ matrix.looker }}
+
+name: Supported Looker Versions
+on:
+  workflow_call:
+    outputs:
+      matrix_json:
+        description: "Supported Versions as a JSON Array"
+        value: ${{ jobs.supported_versions.outputs.matrix }}
+jobs:
+  supported_versions:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Set Matrix
+        id: set-matrix
+        run: |
+          echo "::set-output name=matrix::[\"21_18\",\"21_20\",\"22_0\",\"22_2\",\"22_4\"]"
