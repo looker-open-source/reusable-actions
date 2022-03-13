@@ -2,7 +2,7 @@
 #
 # As the first job, add the call to this workflow...
 #
-#     uses: looker-open-source/reusable-actions/.github/workflows/support-versions.yml@v0.0.1
+#     uses: looker-open-source/reusable-actions/.github/workflows/support-versions.yml@vmain
 #
 # For subsequent jobs add a needs: checkfiles clause, or add it to an array if
 # there already is a call like that. Then use the output of supported-versions in
@@ -14,7 +14,7 @@
 #
 # jobs:
 #   setup:
-#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@v0.0.1
+#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@vmain
 #
 #   test:
 #     name: test - ${{ matrix.looker }}
@@ -47,4 +47,4 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "::set-output name=matrix::[\"21_18\",\"21_20\",\"22_0\",\"22_2\",\"22_4\"]"
+          echo "::set-output name=matrix::[\"21_18\",\"21_20\",\"22_0\",\"22_2\"]"
