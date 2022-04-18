@@ -17,6 +17,15 @@
 #     uses: looker-open-source/reusable-actions/.github/workflows/primary-version.yml@main
 #
 #   test:
+#     name: test
+#     needs: setup
+#     runs-on: ubuntu-latest
+#
+#     steps:
+#       - name: Run a one-line script
+#         run: echo Hello, ${{ fromJson(needs.setup.outputs.matrix_json)[0] }}
+#
+#   test-matrix:
 #     name: test - ${{ matrix.looker }}
 #     needs: setup
 #     runs-on: ubuntu-latest
