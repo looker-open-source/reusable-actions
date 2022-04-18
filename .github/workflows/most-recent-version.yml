@@ -14,7 +14,7 @@
 #
 # jobs:
 #   setup:
-#     uses: looker-open-source/reusable-actions/.github/workflows/test-most-recent-version.yml@main
+#     uses: looker-open-source/reusable-actions/.github/workflows/most-recent-version.yml@main
 #
 #   test:
 #     name: test - ${{ matrix.looker }}
@@ -35,7 +35,7 @@ on:
   workflow_call:
     outputs:
       matrix_json:
-        description: "Most Recent  Version as a JSON Array of 1 element"
+        description: "Most Recent Version as a JSON Array of 1 element"
         value: ${{ jobs.supported_versions.outputs.matrix }}
 jobs:
   supported_versions:
