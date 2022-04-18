@@ -2,7 +2,7 @@
 #
 # As the first job, add the call to this workflow...
 #
-#     uses: looker-open-source/reusable-actions/.github/workflows/support-versions.yml@vmain
+#     uses: looker-open-source/reusable-actions/.github/workflows/support-versions.yml@main
 #
 # For subsequent jobs add a needs: checkfiles clause, or add it to an array if
 # there already is a call like that. Then use the output of supported-versions in
@@ -14,7 +14,7 @@
 #
 # jobs:
 #   setup:
-#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@vmain
+#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
 #
 #   test:
 #     name: test - ${{ matrix.looker }}
