@@ -1,0 +1,50 @@
+# To use this do the following...
+#
+# As the first job, add the call to this workflow...
+#
+#     uses: looker-open-source/reusable-actions/.github/workflows/most-recent-version.yml@main
+#
+# For subsequent jobs add a needs: checkfiles clause, or add it to an array if
+# there already is a call like that. Then use the output of supported-versions in
+# a matrix config
+#
+# name: test most recent version
+# on:
+#   workflow_dispatch:
+#
+# jobs:
+#   setup:
+#     uses: looker-open-source/reusable-actions/.github/workflows/test-most-recent-version.yml@main
+#
+#   test:
+#     name: test - ${{ matrix.looker }}
+#     needs: setup
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
+#
+#     steps:
+#       - name: Repo Checkout
+#         uses: actions/checkout@v2
+#       - name: Run a one-line script
+#         run: echo Hello, ${{ matrix.looker }}
+
+name: Most Recent Version
+on:
+  workflow_call:
+    outputs:
+      matrix_json:
+        description: "Most Recent  Version as a JSON Array of 1 element"
+        value: ${{ jobs.supported_versions.outputs.matrix }}
+jobs:
+  supported_versions:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+
+    steps:
+      - name: Set Matrix
+        id: set-matrix
+        run: |
+          echo "::set-output name=matrix::[\"22_6\"]"
