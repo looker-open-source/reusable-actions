@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        looker: fromJson(needs.setup.outputs.matrix)
+        looker: ${{ fromJson(needs.setup.outputs.matrix) }}
 
     steps:
       - name: get raw value
