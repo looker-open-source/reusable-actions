@@ -17,5 +17,7 @@ jobs:
     steps:
       - name: Repo Checkout
         uses: actions/checkout@v2
+      - name: get raw value
+        run: echo Hello, ${{ needs.setup.outputs.matrix_json }}
       - name: Run a one-line script
         run: echo Hello, ${{ matrix.looker }}
