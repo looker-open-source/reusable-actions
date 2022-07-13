@@ -1,10 +1,10 @@
-name: test supported versions
+name: test security versions
 on:
   workflow_dispatch:
 
 jobs:
   setup:
-    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
+    uses: looker-open-source/reusable-actions/.github/workflows/security-versions.yml@main
 
   test:
     name: test - ${{ matrix.looker }}

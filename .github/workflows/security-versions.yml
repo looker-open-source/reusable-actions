@@ -2,19 +2,19 @@
 #
 # As the first job, add the call to this workflow...
 #
-#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
+#     uses: looker-open-source/reusable-actions/.github/workflows/security-versions.yml@main
 #
 # For subsequent jobs add a needs: checkfiles clause, or add it to an array if
-# there already is a call like that. Then use the output of supported-versions in
+# there already is a call like that. Then use the output of security-versions in
 # a matrix config
 #
-# name: test supported versions
+# name: test security versions
 # on:
 #   workflow_dispatch:
 #
 # jobs:
 #   setup:
-#     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
+#     uses: looker-open-source/reusable-actions/.github/workflows/security-versions.yml@main
 #
 #   test:
 #     name: test - ${{ matrix.looker }}
@@ -30,15 +30,15 @@
 #       - name: Run a one-line script
 #         run: echo Hello, ${{ matrix.looker }}
 
-name: Supported Looker Versions
+name: Security Looker Versions
 on:
   workflow_call:
     outputs:
       matrix_json:
-        description: "Supported Versions as a JSON Array"
-        value: ${{ jobs.supported_versions.outputs.matrix }}
+        description: "Security Versions as a JSON Array"
+        value: ${{ jobs.security_versions.outputs.matrix }}
 jobs:
-  supported_versions:
+  security_versions:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
@@ -47,4 +47,4 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "::set-output name=matrix::[\"22_6\",\"22_8\",\"22_10\",\"22_12\"]"
+          echo "::set-output name=matrix::[\"21_12\",\"21_18\",\"22_0\",\"22_6\",\"22_8\",\"22_10\",\"22_12\"]"

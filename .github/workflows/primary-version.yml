@@ -45,9 +45,9 @@ on:
     outputs:
       matrix_json:
         description: "Primary Version as a JSON Array of 1 element"
-        value: ${{ jobs.supported_versions.outputs.matrix }}
+        value: ${{ jobs.primary_version.outputs.matrix }}
 jobs:
-  supported_versions:
+  primary_version:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
