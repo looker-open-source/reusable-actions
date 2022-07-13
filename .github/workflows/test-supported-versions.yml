@@ -3,20 +3,30 @@ on:
   workflow_dispatch:
 
 jobs:
-  setup:
+  setup1:
     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
-
+  setup2:
+    uses: looker-open-source/reusable-actions/.github/workflows/most-recent-version.yml@main
+  setup:
+    needs: [setup1,setup2]
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Set Matrix
+        id: set-matrix
+        run: |
+          echo "::set-output name=matrix::$(jq -M -n --arg list1 ${{ needs.setup1.outputs.matrix_json }} --arg list2 ${{ needs.setup2.outputs.matrix_json }} '($list1 | fromjson) - ($list2 | fromjson)')"
+ 
   test:
     name: test - ${{ matrix.looker }}
-    needs: setup
+    needs: [setup]
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
+        looker: fromJson(needs.setup.outputs.matrix)
 
     steps:
-      - name: Repo Checkout
-        uses: actions/checkout@v2
       - name: get raw value
         run: echo Hello, ${{ needs.setup.outputs.matrix_json }}
       - name: Run a one-line script
