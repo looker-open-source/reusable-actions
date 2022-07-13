@@ -16,7 +16,7 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "::set-output name=matrix::$(jq -M -n --arg list1 ${{ needs.setup1.outputs.matrix_json }} --arg list2 ${{ needs.setup2.outputs.matrix_json }} '($list1 | fromjson) - ($list2 | fromjson)')"
+          echo "::set-output name=matrix::$(jq -M -n --arg list1 '${{ needs.setup1.outputs.matrix_json }}' --arg list2 '${{ needs.setup2.outputs.matrix_json }}' '($list1 | fromjson) - ($list2 | fromjson)')"
  
   test:
     name: test - ${{ matrix.looker }}
