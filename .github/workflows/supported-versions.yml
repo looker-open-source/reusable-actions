@@ -47,4 +47,4 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "::set-output name=matrix::[\"22_12\",\"22_14\",\"22_16\",\"22_18\"]"
+          echo "::set-output name=matrix::[\"22_12\",\"22_16\",\"22_18\",\"22_20\"]"
