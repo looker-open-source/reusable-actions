@@ -47,4 +47,4 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "::set-output name=matrix::[\"22_18\",\"22_20\",\"23_0\",\"23_2\"]" >> $GITHUB_OUTPUT
+          echo "::set-output name=matrix::[\"22_18\",\"22_20\",\"23_0\",\"23_2\"]"
