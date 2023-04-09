@@ -4,7 +4,7 @@ on:
 
 jobs:
   setup:
-    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
+    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@${{ github.sha }}
 
   test:
     name: test - ${{ matrix.looker }}
