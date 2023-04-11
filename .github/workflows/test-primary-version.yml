@@ -4,7 +4,7 @@ on:
 
 jobs:
   setup:
-    uses: looker-open-source/reusable-actions/.github/workflows/primary-version.yml@main
+    uses: ./.github/workflows/primary-version.yml
 
   test:
     name: test
@@ -24,7 +24,5 @@ jobs:
         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
 
     steps:
-      - name: Repo Checkout
-        uses: actions/checkout@v2
       - name: Run a one-line script
         run: echo Hello, ${{ matrix.looker }}
