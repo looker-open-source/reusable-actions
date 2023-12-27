@@ -1,0 +1,47 @@
+name: viz-release
+on:
+  workflow_call:
+    secrets:
+      LOS_AUTO_BOT_RP_TOKEN:
+        required: true
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    outputs:
+      release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
+
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        id: release
+        with:
+          token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
+          release-type: node
+
+  bundle-upload:
+    needs: release-please
+    runs-on: ubuntu-latest
+
+    if: ${{ needs.release-please.outputs.release_created }}
+    steps:
+      - name: Repo checkout
+        uses: actions/checkout@v4
+
+      - name: Setup node
+        uses: actions/setup-node@v4
+        with:
+          # Any higher and we need to update vizes to use webpack 5
+          node-version: '16'
+
+      - name: Install dependencies and build/bundle
+        run: |
+          yarn install --immutable --immutable-cache --check-cache
+          yarn build
+
+      - name: Upload/attach production dist to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release upload ${{ needs.release-please.outputs.tag_name }} dist/bundle.js
+          gh release upload ${{ needs.release-please.outputs.tag_name }} dist/bundle.js.map
