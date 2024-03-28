@@ -1,0 +1,16 @@
+name: block-release
+on:
+  workflow_call:
+    secrets:
+      LOS_AUTO_BOT_RP_TOKEN:
+        required: true
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: google-github-actions/release-please-action@v4
+        with:
+          token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
+          release-type: simple
