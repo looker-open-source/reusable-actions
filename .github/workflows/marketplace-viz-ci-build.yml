@@ -1,5 +1,22 @@
 name: viz-ci-build
-on: [workflow_call]
+on:
+  workflow_call:
+    inputs:
+      node-version:
+        description: 'Node.js version to use (default: 20)'
+        required: false
+        default: '20'
+        type: string
+      run-tests:
+        description: 'Whether to run tests (yarn test)'
+        required: false
+        default: false
+        type: boolean
+      run-lint:
+        description: 'Whether to run linter (yarn lint)'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   build:
@@ -11,10 +28,19 @@ jobs:
       - name: Setup node
         uses: actions/setup-node@v4
         with:
-          # Any higher and we need to update vizes to use webpack 5
-          node-version: '16'
+          node-version: ${{ inputs.node-version }}
+          cache: 'yarn'
 
-      - name: Install dependencies and build/bundle
-        run: |
-          yarn install --immutable --immutable-cache --check-cache
-          yarn build
+      - name: Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: Run linter
+        if: ${{ inputs.run-lint }}
+        run: yarn lint
+
+      - name: Run tests
+        if: ${{ inputs.run-tests }}
+        run: yarn test
+
+      - name: Build/bundle
+        run: yarn build
