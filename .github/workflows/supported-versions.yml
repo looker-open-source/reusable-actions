@@ -48,3 +48,6 @@ jobs:
         id: set-matrix
         run: |
           echo "matrix=[\"26_18\",\"26_16\",\"26_14\",\"26_12\"]" >> $GITHUB_OUTPUT
+          echo "matrix=${SUPPORTED_LOOKER_VERSIONS}" >> $GITHUB_OUTPUT
+        env:
+          SUPPORTED_LOOKER_VERSIONS: ${{ vars.SUPPORTED_LOOKER_VERSIONS }}
