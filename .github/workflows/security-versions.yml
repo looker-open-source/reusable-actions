@@ -47,4 +47,6 @@ jobs:
       - name: Set Matrix
         id: set-matrix
         run: |
-          echo "matrix=[\"26_18\",\"26_16\",\"26_14\",\"26_12\",\"26_6\",\"26_0\",\"25_18\"]" >> $GITHUB_OUTPUT
+          echo "matrix=${SECURITY_LOOKER_VERSIONS}" >> $GITHUB_OUTPUT
+        env:
+          SECURITY_LOOKER_VERSIONS: ${{ vars.SECURITY_LOOKER_VERSIONS }}
