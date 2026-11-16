@@ -13,7 +13,7 @@ jobs:
       tag_name: ${{ steps.release.outputs.tag_name }}
 
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: google-github-actions/release-please-action@e4dc86ba9405554aeba3c6bb2d169500e7d3b4ee # v4
         id: release
         with:
           token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
@@ -26,10 +26,12 @@ jobs:
     if: ${{ needs.release-please.outputs.release_created }}
     steps:
       - name: Repo checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
 
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           # Visualizations are modernized to use Webpack 5 and compile natively on Node 20
           node-version: '20'
@@ -42,5 +44,6 @@ jobs:
       - name: Upload/attach production dist to release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NEEDS_RELEASE_PLEASE_OUTPUTS_TAG_NAME: ${{ needs.release-please.outputs.tag_name }}
         run: |
-          gh release upload ${{ needs.release-please.outputs.tag_name }} dist/bundle.js
+          gh release upload ${NEEDS_RELEASE_PLEASE_OUTPUTS_TAG_NAME} dist/bundle.js
